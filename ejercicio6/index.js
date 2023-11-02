@@ -14,7 +14,7 @@ if(dni < 0 || dni > 99999999){
     
         if(letra != letras[resto]){
     
-            console.log("La letra o el número proporcionados no son correctos");
+            console.log("La letra indicada no es correcta");
     
         }else{
     
