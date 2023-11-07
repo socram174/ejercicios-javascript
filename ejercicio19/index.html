@@ -1,59 +1,33 @@
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Ejercicio 19 - Información sobre eventos</title>
-
-    <style type="text/css">
-        body {font-family: arial, helvetica;}
-        .box {width:160px; height: 160px; border:thin solid silver; padding:.5em; float: left; margin-right: 15px;}
-        .box h1 {margin: 0;}
-    </style>
-
-<script type="text/javascript">
-    function tamanoVentanaNavegador() {
-        var dimensiones = [];
-
-        if (typeof (window.innerWidth) == 'number') {
-            dimensiones = [window.innerWidth, window.innerHeight];
-        } else if (document.documentElement && (document.documentElement.clientWidth || document.documentElement.clientHeight)) {
-            dimensiones = [document.documentElement.clientWidth, document.documentElement.clientHeight];
-        } else if (document.body && (document.body.clientWidth || document.body.clientHeight)) {
-            dimensiones = [document.body.clientWidth, document.body.clientHeight];
-        }
-
-        return dimensiones;
-    }
-
-    document.addEventListener("click", function (event) {
-        var dimensiones = tamanoVentanaNavegador();
-        var x = event.clientX;
-        var y = event.clientY;
-        var zona = "";
-
-        if (x < dimensiones[0] / 2) {
-            zona += "Izquierda ";
-        } else {
-            zona += "Derecha ";
-        }
-
-        if (y < dimensiones[1] / 2) {
-            zona += "arriba";
-        } else {
-            zona += "abajo";
-        }
-
-        document.querySelector("h1").innerText = zona;
-    });
-</script>
+    <title>Contador de caracteres</title>
 </head>
-
 <body>
-    <div class="box">
-        <h1>Posición</h1>
-        <span class="posicion"></span>
-    </div>
-    <script type="text/javascript" src="js/main.js"></script>
+    <textarea id="texto" rows="5" cols="50"></textarea>
+    <div id="contador">Caracteres restantes: 150</div>
+
+    <script type="text/javascript">
+        var textoElement = document.getElementById("texto");
+        var contadorElement = document.getElementById("contador");
+        
+        var limiteCaracteres = 150;
+
+        // Agrega un controlador de eventos para el evento "input"
+        textoElement.addEventListener("input", function () {
+            // Calcula la cantidad de caracteres restantes
+            var caracteresRestantes = limiteCaracteres - textoElement.value.length;
+            
+            // Actualiza el contador
+            contadorElement.textContent = "Caracteres restantes: " + caracteresRestantes;
+            
+            // Si se supera el límite de caracteres, ajusta el contenido del campo de texto
+            if (caracteresRestantes < 0) {
+                var textoRecortado = textoElement.value.slice(0, limiteCaracteres);
+                textoElement.value = textoRecortado;
+                contadorElement.textContent = "Has alcanzado el límite de caracteres.";
+            }
+        });
+    </script>
 </body>
 </html>
